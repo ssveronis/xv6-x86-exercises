@@ -6,6 +6,7 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
+#include "syscallsCount.h"
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -144,6 +145,10 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_getpinfo(void);
+extern int sys_getfavnum(void);
+extern void sys_shutdown(void);
+extern int sys_getcount(int syscall);
+extern int sys_killrandom(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -168,7 +173,13 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_getpinfo]    sys_getpinfo,
+[SYS_getfavnum] sys_getfavnum,
+[SYS_shutdown] sys_shutdown,
+[SYS_getcount] sys_getcount,
+[SYS_killrandom] sys_killrandom,
 };
+
+int syscallsCount[SYSCALLCROWD] = {0};
 
 void
 syscall(void)
@@ -178,6 +189,7 @@ syscall(void)
   num = proc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     proc->tf->eax = syscalls[num]();
+    syscallsCount[num-1] += 1;
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             proc->pid, proc->name, num);

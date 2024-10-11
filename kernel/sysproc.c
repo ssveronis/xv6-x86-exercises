@@ -5,6 +5,9 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "syscallsCount.h"
+#include "random.h"
+#include "set.h"
 
 extern struct ptable ptable;
 
@@ -120,4 +123,49 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+int sys_getfavnum(void){
+  return 7;
+}
+
+void sys_shutdown(void){
+  outw(0x604, 0x2000);
+  return;
+}
+
+int sys_getcount(void){
+  int syscall;
+  if(argint(0, &syscall) < 0) return -1;
+  cprintf("%d\n", syscall);
+  cprintf("%d\n", syscallsCount[syscall-1]);
+  return syscallsCount[syscall-1];
+}
+
+int sys_killrandom(void){
+  LCG lcg;
+  Set *set = createRoot();
+
+  struct pstat *pstat;
+  argptr(0, (void*)&pstat, sizeof(*pstat));
+  if (pstat == 0) {
+      return -1;
+  }
+  acquire(&ptable.lock);
+  struct proc *p;
+  for (p = ptable.proc; p != &(ptable.proc[NPROC]); p++) {
+      createNode(p->pid, set);
+  }
+  release(&ptable.lock);
+
+  lcg.m = set->size;
+  lcg.a = sys_uptime()/(MAX(sys_getfavnum(), set->size));
+  lcg.c = sys_getfavnum();
+  lcg.state = 0;
+
+  lcg_init(&lcg, sys_uptime());
+  lcg_random(&lcg);
+  cprintf("Killing PID: %d\n", getNodeAtPosition(set,lcg.state)->i);
+  kill(getNodeAtPosition(set,lcg.state)->i);
+  return 1;
 }

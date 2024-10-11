@@ -24,6 +24,10 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int getpinfo(struct pstat*);
+int getfavnum(void);
+void shutdown(void);
+int getcount(int);
+int killrandom(void);
 
 // ulib.c
 int stat(char*, struct stat*);
