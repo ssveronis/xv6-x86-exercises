@@ -8,6 +8,15 @@ int main(int argc, char *argv[]){
         printf(1, "getsyscallcount: Unexpected input");
         exit();
     }
-    getcount(atoi(argv[1]));
+    getcount(
+        atoi( //ASCII to integer
+        /*
+        atoi("25")->25
+        atoi("abc")->¯\_(ツ)_/¯
+        Δεν έχει error handling
+        */
+            argv[1] //SYSCALL number
+            )
+            );
     exit();
 }

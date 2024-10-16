@@ -19,7 +19,6 @@ int getFlagInt(char *flag);
 void cFlagHandler(char* filename, char *argv[], int i);
 
 int main(int argc, char *argv[]){
-    int i, c;
     char* filename;
 
     if (argc <= 1) { //Αν δεν υπάρχει όνομα για το αρχείο

@@ -123,6 +123,7 @@ argstr(int n, char **pp)
   return fetchstr(addr, pp);
 }
 
+//pointers σε συναρτήσεις που βρίσκονται σε εξωτερικά αρχεία
 extern int sys_chdir(void);
 extern int sys_close(void);
 extern int sys_dup(void);
@@ -150,6 +151,7 @@ extern void sys_shutdown(void);
 extern int sys_getcount(int syscall);
 extern int sys_killrandom(void);
 
+//Πίνακας που αντιστοιχεί το κάθε syscall number στον pointer της αντίστοιχης συνάρτησης
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
 [SYS_exit]    sys_exit,
@@ -179,6 +181,7 @@ static int (*syscalls[])(void) = {
 [SYS_killrandom] sys_killrandom,
 };
 
+//Πίνακας που μετράει πόσες φορές εκτελέστηκε το κάθε syscall
 int syscallsCount[SYSCALLCROWD] = {0};
 
 void
