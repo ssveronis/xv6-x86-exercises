@@ -1,9 +1,9 @@
 #include "types.h"
 #include "user.h"
 #include "pstat.h"
-#define N 5
+#define N 8
 
-int tickets[N] = {200, 100, 500, 50, 150};
+int tickets[N] = {100, 200, 400, 800, 1600, 3200, 4000, 5000};
 int children[N];
 struct pstat pstat;
 int lottery;
@@ -49,9 +49,13 @@ void kill_children() {
 }
 
 void print_info() {
-    int index[N] = {-1};
-    int ticks[N] = {-1};
+    int index[N];
+    int ticks[N];
     int tticks = 0;
+    for (int i = 0; i < N; i++) {
+        index[i] = -1;
+        ticks[i] = -1;
+    }
 
     for (int i = 0; i < N; i++) {
         index[i] = pindex(&pstat, children[i]);

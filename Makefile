@@ -198,6 +198,7 @@ USER_PROGS=\
 	shutdown\
 	getsyscallcount\
 	killrandom\
+	lotteryschedtest\
 
 UPROGS := $(addprefix fs/,$(USER_PROGS))
 

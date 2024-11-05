@@ -148,8 +148,9 @@ extern int sys_uptime(void);
 extern int sys_getpinfo(void);
 extern int sys_getfavnum(void);
 extern void sys_shutdown(void);
-extern int sys_getcount(int syscall);
+extern int sys_getcount(void);
 extern int sys_killrandom(void);
+extern void sys_settickets(void);
 
 //Πίνακας που αντιστοιχεί το κάθε syscall number στον pointer της αντίστοιχης συνάρτησης
 static int (*syscalls[])(void) = {
@@ -179,6 +180,7 @@ static int (*syscalls[])(void) = {
 [SYS_shutdown] sys_shutdown,
 [SYS_getcount] sys_getcount,
 [SYS_killrandom] sys_killrandom,
+[SYS_settickets] sys_settickets
 };
 
 //Πίνακας που μετράει πόσες φορές εκτελέστηκε το κάθε syscall

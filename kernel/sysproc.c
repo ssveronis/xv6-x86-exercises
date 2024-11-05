@@ -168,3 +168,11 @@ int sys_killrandom(void){
   
   return 1;
 }
+
+void sys_settickets(void){
+  int n;
+  if (argint(0, &n) < 0) return;
+  if (n < 1 || n > NPROCTICKETS) return;
+  proc->tickets = n;
+  return;
+}

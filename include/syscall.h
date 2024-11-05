@@ -25,3 +25,4 @@
 #define SYS_shutdown 26
 #define SYS_getcount 27
 #define SYS_killrandom 28
+#define SYS_settickets 29

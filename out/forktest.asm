@@ -56,7 +56,7 @@ forktest(void)
   int n, pid;
 
   printf(1, "fork test\n");
-  8b:	48 c7 c6 18 05 00 00 	mov    $0x518,%rsi
+  8b:	48 c7 c6 38 05 00 00 	mov    $0x538,%rsi
   92:	bf 01 00 00 00       	mov    $0x1,%edi
   97:	b8 00 00 00 00       	mov    $0x0,%eax
   9c:	e8 5f ff ff ff       	call   0 <printf>
@@ -90,7 +90,7 @@ forktest(void)
   da:	75 48                	jne    124 <forktest+0xa1>
     printf(1, "fork claimed to work N times!\n", N);
   dc:	ba e8 03 00 00       	mov    $0x3e8,%edx
-  e1:	48 c7 c6 28 05 00 00 	mov    $0x528,%rsi
+  e1:	48 c7 c6 48 05 00 00 	mov    $0x548,%rsi
   e8:	bf 01 00 00 00       	mov    $0x1,%edi
   ed:	b8 00 00 00 00       	mov    $0x0,%eax
   f2:	e8 09 ff ff ff       	call   0 <printf>
@@ -104,7 +104,7 @@ forktest(void)
  101:	85 c0                	test   %eax,%eax
  103:	79 1b                	jns    120 <forktest+0x9d>
       printf(1, "wait stopped early\n");
- 105:	48 c7 c6 47 05 00 00 	mov    $0x547,%rsi
+ 105:	48 c7 c6 67 05 00 00 	mov    $0x567,%rsi
  10c:	bf 01 00 00 00       	mov    $0x1,%edi
  111:	b8 00 00 00 00       	mov    $0x0,%eax
  116:	e8 e5 fe ff ff       	call   0 <printf>
@@ -122,7 +122,7 @@ forktest(void)
  12f:	83 f8 ff             	cmp    $0xffffffff,%eax
  132:	74 1b                	je     14f <forktest+0xcc>
     printf(1, "wait got too many\n");
- 134:	48 c7 c6 5b 05 00 00 	mov    $0x55b,%rsi
+ 134:	48 c7 c6 7b 05 00 00 	mov    $0x57b,%rsi
  13b:	bf 01 00 00 00       	mov    $0x1,%edi
  140:	b8 00 00 00 00       	mov    $0x0,%eax
  145:	e8 b6 fe ff ff       	call   0 <printf>
@@ -131,7 +131,7 @@ forktest(void)
   }
   
   printf(1, "fork test OK\n");
- 14f:	48 c7 c6 6e 05 00 00 	mov    $0x56e,%rsi
+ 14f:	48 c7 c6 8e 05 00 00 	mov    $0x58e,%rsi
  156:	bf 01 00 00 00       	mov    $0x1,%edi
  15b:	b8 00 00 00 00       	mov    $0x0,%eax
  160:	e8 9b fe ff ff       	call   0 <printf>
@@ -678,3 +678,26 @@ SYSCALL(getpinfo)
  509:	b8 18 00 00 00       	mov    $0x18,%eax
  50e:	cd 40                	int    $0x40
  510:	c3                   	ret
+
+0000000000000511 <getfavnum>:
+SYSCALL(getfavnum)
+ 511:	b8 19 00 00 00       	mov    $0x19,%eax
+ 516:	cd 40                	int    $0x40
+ 518:	c3                   	ret
+
+0000000000000519 <shutdown>:
+SYSCALL(shutdown)
+ 519:	b8 1a 00 00 00       	mov    $0x1a,%eax
+ 51e:	cd 40                	int    $0x40
+ 520:	c3                   	ret
+
+0000000000000521 <getcount>:
+SYSCALL(getcount)
+ 521:	b8 1b 00 00 00       	mov    $0x1b,%eax
+ 526:	cd 40                	int    $0x40
+ 528:	c3                   	ret
+
+0000000000000529 <killrandom>:
+ 529:	b8 1c 00 00 00       	mov    $0x1c,%eax
+ 52e:	cd 40                	int    $0x40
+ 530:	c3                   	ret
